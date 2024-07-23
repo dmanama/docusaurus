@@ -1,0 +1,21 @@
+name: Deploy Docusaurus to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # ou la branche que vous utilisez pour le développement
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # spécifiez la version de Node.js que votre projet requiert
+    - run: npm install
+    - run: npm run build
+    - uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.github-pages }}
+        publish_dir: ./build  # vérifiez le chemin d'accès au répertoire de build de votre projet
